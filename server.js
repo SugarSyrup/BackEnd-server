@@ -23,8 +23,9 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.get("/", (req,res) => {
-    res.sendFile(path.join(__dirname, "client/build/index.html"));
-    console.log("/");
+    res.send("rusNaBi's Web Server");
+    // res.sendFile(path.join(__dirname, "client/build/index.html"));
+    // console.log("/");
 });
 
 // app.post("/auth/login", async (req,res) => {
