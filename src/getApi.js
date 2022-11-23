@@ -48,7 +48,6 @@ const getFoodList = async () => {
 // getFoodList();
 export const getFoodInfoFromCode = async (food_code) => {
     const data = await FoodInfo.findOne({foodCode:food_code});
-    let returnData;
     if(data !== null) {
         return ;
     }
@@ -73,7 +72,7 @@ export const getFoodInfoFromCode = async (food_code) => {
             let ntrfs = 0;
             let fibtg = 0;
 
-            // console.log(foodList);
+            //console.log(foodList);
             try{
                 if(foodList.length === 1) {
                     energy += Number(foodList["energy_Qy"]["_text"]);
@@ -93,13 +92,10 @@ export const getFoodInfoFromCode = async (food_code) => {
             } catch (e) {
                 console.log(e);
             }
-            returnData = await FoodInfo.create({
+            await FoodInfo.create({
                 foodName, foodCode:food_code, energy,prot ,carbohydrate ,ntrfs ,fibtg
             })
         });
-        
-        console.log(returnData);
-        return returnData;
     }
 }
 
