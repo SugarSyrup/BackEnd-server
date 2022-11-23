@@ -72,22 +72,25 @@ export const getFoodInfoFromCode = async (food_code) => {
             let ntrfs = 0;
             let fibtg = 0;
 
-            // console.log(foodList);
-
-            if(foodList.length === 1) {
-                energy += Number(foodList["energy_Qy"]["_text"]);
-                prot += Number(foodList["prot_Qy"]["_text"]);
-                carbohydrate += Number(foodList["carbohydrate_Qy"]["_text"]);
-                ntrfs += Number(foodList["ntrfs_Qy"]["_text"]);
-                fibtg += Number(foodList["fibtg_Qy"]["_text"]);
-            } else {
-                foodList.forEach(async (food) => {
-                    energy += Number(food["energy_Qy"]["_text"]);
-                    prot += Number(food["prot_Qy"]["_text"]);
-                    carbohydrate += Number(food["carbohydrate_Qy"]["_text"]);
-                    ntrfs += Number(food["ntrfs_Qy"]["_text"]);
-                    fibtg += Number(food["fibtg_Qy"]["_text"]);
-                })
+            console.log(foodList);
+            try{
+                if(foodList.length === 1) {
+                    energy += Number(foodList["energy_Qy"]["_text"]);
+                    prot += Number(foodList["prot_Qy"]["_text"]);
+                    carbohydrate += Number(foodList["carbohydrate_Qy"]["_text"]);
+                    ntrfs += Number(foodList["ntrfs_Qy"]["_text"]);
+                    fibtg += Number(foodList["fibtg_Qy"]["_text"]);
+                } else {
+                    foodList.forEach(async (food) => {
+                        energy += Number(food["energy_Qy"]["_text"]);
+                        prot += Number(food["prot_Qy"]["_text"]);
+                        carbohydrate += Number(food["carbohydrate_Qy"]["_text"]);
+                        ntrfs += Number(food["ntrfs_Qy"]["_text"]);
+                        fibtg += Number(food["fibtg_Qy"]["_text"]);
+                    })
+                }
+            } catch (e) {
+                console.log(e);
             }
             await FoodInfo.create({
                 foodName, foodCode:food_code, energy,prot ,carbohydrate ,ntrfs ,fibtg
