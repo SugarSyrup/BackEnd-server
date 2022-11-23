@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "type": "module",
+  "start": "node server.js",
   "scripts": {
     "start": "npm run dev:server",
     "heroku-postbuild": "npm install",
