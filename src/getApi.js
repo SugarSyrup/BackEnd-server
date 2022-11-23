@@ -7,46 +7,48 @@ import FoodInfo from './modules/FoodInfo.js';
 import HumanFlag from './modules/HumanFlag.js';
 
 const getFoodList = async () => {
-    var url = 'http://apis.data.go.kr/1390802/AgriFood/MzenFoodCode/getKoreanFoodList';
-    var queryParams = '?' + encodeURIComponent('serviceKey') + '=u6RcVsFR208vg2Vldw7UE%2BYn7T0GztD1MT%2FuY%2FMwo1Ya5uYcWCqFBUcoRkVykof%2FN%2BBymKAWQ2P2%2FPNTahz4%2Fg%3D%3D'; 
-    var foodsCount = 0;
+        var url = 'http://apis.data.go.kr/1390802/AgriFood/MzenFoodCode/getKoreanFoodList';
+        var queryParams = '?' + encodeURIComponent('serviceKey') + '=u6RcVsFR208vg2Vldw7UE%2BYn7T0GztD1MT%2FuY%2FMwo1Ya5uYcWCqFBUcoRkVykof%2FN%2BBymKAWQ2P2%2FPNTahz4%2Fg%3D%3D'; 
+        var foodsCount = 0;
 
-    await request_promise({
-        url: url + queryParams,
-        method: 'GET'
-    }, function (error, response, body) {
-        foodsCount = JSON.parse(convert.xml2json(body, {compact: true , spaces: 4}))['response']['body']['total_Count']['_text'];
-    });
+        await request_promise({
+            url: url + queryParams,
+            method: 'GET'
+        }, function (error, response, body) {
+            foodsCount = JSON.parse(convert.xml2json(body, {compact: true , spaces: 4}))['response']['body']['total_Count']['_text'];
+        });
 
-    queryParams += '&' + encodeURIComponent('Page_Size') + '=' + encodeURIComponent(foodsCount); 
+        queryParams += '&' + encodeURIComponent('Page_Size') + '=' + encodeURIComponent(foodsCount); 
 
-    request({
-        url: url + queryParams,
-        method: 'GET'
-    }, function (error, response, body) {
-        if(error){
-            console.log(error);
-        }
-        console.log('Reponse received');
-        const foodList = JSON.parse(convert.xml2json(body, {compact: true , spaces: 4}))['response']['body']['items']['item'];
-        // const largeNames = new Set();
-        // const middleNames = new Set();
-        const allfoods = {};
-        var count = 0;
-        foodList.forEach(async (food) => {
-            count += 1;
-            // largeNames.add(food.large_Name["_text"]);
-            // middleNames.add(food.middle_Name["_text"]);
-            allfoods[food.food_Name["_text"]] = food.food_Code["_text"];
-            // await FoodList.create({
-            //     foodName : food.food_Name["_text"],
-            //     foodCode : food.food_Code["_text"],
-            // });
-            setFoodInfoList(food.food_Code["_text"]);
-        })    
-    });
+        request({
+            url: url + queryParams,
+            method: 'GET'
+        }, function (error, response, body) {
+            if(error){
+                console.log(error);
+            }
+            console.log('Reponse received');
+            const foodList = JSON.parse(convert.xml2json(body, {compact: true , spaces: 4}))['response']['body']['items']['item'];
+            // const largeNames = new Set();
+            // const middleNames = new Set();
+            const allfoods = {};
+            var count = 0;
+            foodList.forEach(async (food, index) => {
+                setTimeout(async () => {
+                    count += 1;
+                    // largeNames.add(food.large_Name["_text"]);
+                    // middleNames.add(food.middle_Name["_text"]);
+                    allfoods[food.food_Name["_text"]] = food.food_Code["_text"];
+                    // await FoodList.create({
+                    //     foodName : food.food_Name["_text"],
+                    //     foodCode : food.food_Code["_text"],
+                    // });
+                    setFoodInfoList(food.food_Code["_text"]);
+                },2000*index);
+            })    
+        });
 }
-// getFoodList();
+getFoodList();
 const setFoodInfoList = async(foodCode) => {
     var url = 'http://apis.data.go.kr/1390802/AgriFood/MzenFoodNutri/getKoreanFoodIdntList';
     var queryParams = '?' + encodeURIComponent('serviceKey') + '=u6RcVsFR208vg2Vldw7UE%2BYn7T0GztD1MT%2FuY%2FMwo1Ya5uYcWCqFBUcoRkVykof%2FN%2BBymKAWQ2P2%2FPNTahz4%2Fg%3D%3D' + '&' + encodeURIComponent('food_Code') + '=' + foodCode;

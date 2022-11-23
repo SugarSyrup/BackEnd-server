@@ -63,12 +63,13 @@ app.get("/api/getFoodList", async (req, res) => {
     res.json({foods});
 })
 
-app.post("/api/getFoodResource", async (req, res) => {
+app.post("/api/getFoodResource", (req, res) => {
     const {body: {foodCode}} = req;
-    await getFoodInfoFromCode(foodCode);
-    const data = await FoodInfo.findOne({ foodCode });
-    // console.log(data);
-    res.json({data});    
+    getFoodInfoFromCode(foodCode);
+    setTimeout(async ()=> {
+        const data = await FoodInfo.findOne({ foodCode });
+        res.json({data});    
+    },2000)
 })
 // const data = await FoodInfo.findOne({ foodCode: "D287021"});
 // console.log(data);
