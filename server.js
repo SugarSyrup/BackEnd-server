@@ -63,9 +63,9 @@ app.get("/api/getFoodList", async (req, res) => {
 
 app.post("/api/getFoodResource", async (req, res) => {
     const {body: {foodCode}} = req;
-    await getFoodInfoFromCode(foodCode);
-    const data = await FoodInfo.findOne({ foodCode });
-    // console.log(data);
+    const data = await getFoodInfoFromCode(foodCode);
+    // const data = await FoodInfo.findOne({ foodCode });
+    console.log(data);
     res.json({data});    
 })
 // const data = await FoodInfo.findOne({ foodCode: "D287021"});
