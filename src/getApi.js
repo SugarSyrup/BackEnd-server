@@ -38,14 +38,62 @@ const getFoodList = async () => {
             // largeNames.add(food.large_Name["_text"]);
             // middleNames.add(food.middle_Name["_text"]);
             allfoods[food.food_Name["_text"]] = food.food_Code["_text"];
-            await FoodList.create({
-                foodName : food.food_Name["_text"],
-                foodCode : food.food_Code["_text"],
-            });
+            // await FoodList.create({
+            //     foodName : food.food_Name["_text"],
+            //     foodCode : food.food_Code["_text"],
+            // });
+            setFoodInfoList(food.food_Code["_text"]);
         })    
     });
 }
 // getFoodList();
+const setFoodInfoList = async(foodCode) => {
+    var url = 'http://apis.data.go.kr/1390802/AgriFood/MzenFoodNutri/getKoreanFoodIdntList';
+    var queryParams = '?' + encodeURIComponent('serviceKey') + '=u6RcVsFR208vg2Vldw7UE%2BYn7T0GztD1MT%2FuY%2FMwo1Ya5uYcWCqFBUcoRkVykof%2FN%2BBymKAWQ2P2%2FPNTahz4%2Fg%3D%3D' + '&' + encodeURIComponent('food_Code') + '=' + foodCode;
+    
+    request({
+        url: url + queryParams,
+        method: 'GET'
+    }, async function (error, response, body) {
+        try{
+            if(error){
+                console.log(error);
+            }
+            const foodName = JSON.parse(convert.xml2json(body, {compact: true , spaces: 4}))['response']['body']['items']['item']['main_Food_Name']["_text"];
+            const foodList = JSON.parse(convert.xml2json(body, {compact: true , spaces: 4}))['response']['body']['items']['item']['idnt_List'];
+
+            let energy =0;
+            let prot = 0;
+            let carbohydrate = 0;
+            let ntrfs = 0;
+            let fibtg = 0;
+
+        
+            // if(foodList.length === 1) {
+                energy += Number(foodList["energy_Qy"]["_text"]);
+                prot += Number(foodList["prot_Qy"]["_text"]);
+                carbohydrate += Number(foodList["carbohydrate_Qy"]["_text"]);
+                ntrfs += Number(foodList["ntrfs_Qy"]["_text"]);
+                fibtg += Number(foodList["fibtg_Qy"]["_text"]);
+            // } else {
+            //     foodList.forEach(async (food) => {
+            //         energy += Number(food["energy_Qy"]["_text"]);
+            //         prot += Number(food["prot_Qy"]["_text"]);
+            //         carbohydrate += Number(food["carbohydrate_Qy"]["_text"]);
+            //         ntrfs += Number(food["ntrfs_Qy"]["_text"]);
+            //         fibtg += Number(food["fibtg_Qy"]["_text"]);
+            //     })
+            // }
+            console.log(foodName, foodCode);
+            await FoodInfo.create({
+                foodName, foodCode, energy, prot ,carbohydrate ,ntrfs ,fibtg
+            })
+        } catch (e) {
+            console.log(e);
+        }        
+    });
+}
+
 export const getFoodInfoFromCode = async (food_code) => {
     const data = await FoodInfo.findOne({foodCode:food_code});
     if(data !== null) {
