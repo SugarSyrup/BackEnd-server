@@ -24,6 +24,8 @@ app.use(cors({
     'Access-Control-Allow-Credentials': 'true',
     'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',
     'Access-Control-Allow-Headers': 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json',
+    'origin': "*",
+    'credentials': 'true'
 }));
 app.use(express.static(path.join(__dirname, 'client/build')));
 
