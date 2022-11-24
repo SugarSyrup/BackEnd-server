@@ -48,7 +48,7 @@ const getFoodList = async () => {
             })    
         });
 }
-getFoodList();
+//getFoodList();
 const setFoodInfoList = async(foodCode) => {
     var url = 'http://apis.data.go.kr/1390802/AgriFood/MzenFoodNutri/getKoreanFoodIdntList';
     var queryParams = '?' + encodeURIComponent('serviceKey') + '=u6RcVsFR208vg2Vldw7UE%2BYn7T0GztD1MT%2FuY%2FMwo1Ya5uYcWCqFBUcoRkVykof%2FN%2BBymKAWQ2P2%2FPNTahz4%2Fg%3D%3D' + '&' + encodeURIComponent('food_Code') + '=' + foodCode;

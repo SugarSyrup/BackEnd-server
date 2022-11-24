@@ -66,7 +66,7 @@ app.get("/api/getFoodList", async (req, res) => {
     res.json({foods});
 })
 
-app.post("/api/getFoodResource", (req, res) => {
+app.post("/api/getFoodResource", async (req, res) => {
     const {body: {foodCode}} = req;
     getFoodInfoFromCode(foodCode);
     setTimeout(async ()=> {
