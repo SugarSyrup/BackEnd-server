@@ -21,6 +21,9 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 app.use(cors({
     'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Credentials': 'true',
+    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS',
+    'Access-Control-Allow-Headers': 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json',
 }));
 app.use(express.static(path.join(__dirname, 'client/build')));
 
