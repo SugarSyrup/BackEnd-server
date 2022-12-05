@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const url = `mongodb+srv://ruswkdbs:${process.env.MONGODB_PASSWORD}@cluster0.liw2iwz.mongodb.net/?retryWrites=true&w=majority`
+const url = `mongodb+srv://${process.env.MONGODB_ID}:${process.env.MONGODB_PASSWORD}@cluster0.liw2iwz.mongodb.net/?retryWrites=true&w=majority`
 
 mongoose.connect(url, {
     useNewUrlParser: true,

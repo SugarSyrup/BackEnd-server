@@ -16,7 +16,7 @@ import HumanFlag from "./src/modules/HumanFlag.js";
 
 const __dirname = path.resolve();
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 
 app.use(express.json());
 app.use(cors({
@@ -88,5 +88,5 @@ app.post("/api/getUserInfo", async (req,res) => {
 
 
 app.listen(PORT, function() {
-    console.log("Server is Now Running : http://localhost:3000");
+    console.log("Server is Now Running : http://localhost:8080");
 });

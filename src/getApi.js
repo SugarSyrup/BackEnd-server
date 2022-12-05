@@ -2,13 +2,16 @@ import request from 'request';
 import request_promise from 'request-promise';
 import convert from 'xml-js';
 
+import dotenv from 'dotenv';
+dotenv.config();
+
 import FoodList from './modules/FoodList.js';
 import FoodInfo from './modules/FoodInfo.js';
 import HumanFlag from './modules/HumanFlag.js';
 
 const getFoodList = async () => {
         var url = 'http://apis.data.go.kr/1390802/AgriFood/MzenFoodCode/getKoreanFoodList';
-        var queryParams = '?' + encodeURIComponent('serviceKey') + '=u6RcVsFR208vg2Vldw7UE%2BYn7T0GztD1MT%2FuY%2FMwo1Ya5uYcWCqFBUcoRkVykof%2FN%2BBymKAWQ2P2%2FPNTahz4%2Fg%3D%3D'; 
+        var queryParams = '?' + encodeURIComponent('serviceKey') + process.env.EXPORT_API_SECRETKEY; 
         var foodsCount = 0;
 
         await request_promise({
@@ -51,7 +54,7 @@ const getFoodList = async () => {
 //getFoodList();
 const setFoodInfoList = async(foodCode) => {
     var url = 'http://apis.data.go.kr/1390802/AgriFood/MzenFoodNutri/getKoreanFoodIdntList';
-    var queryParams = '?' + encodeURIComponent('serviceKey') + '=u6RcVsFR208vg2Vldw7UE%2BYn7T0GztD1MT%2FuY%2FMwo1Ya5uYcWCqFBUcoRkVykof%2FN%2BBymKAWQ2P2%2FPNTahz4%2Fg%3D%3D' + '&' + encodeURIComponent('food_Code') + '=' + foodCode;
+    var queryParams = '?' + encodeURIComponent('serviceKey') + process.env.EXPORT_API_SECRETKEY + '&' + encodeURIComponent('food_Code') + '=' + foodCode;
     
     request({
         url: url + queryParams,
@@ -103,7 +106,7 @@ export const getFoodInfoFromCode = async (food_code) => {
     }
     else {
         var url = 'http://apis.data.go.kr/1390802/AgriFood/MzenFoodNutri/getKoreanFoodIdntList';
-        var queryParams = '?' + encodeURIComponent('serviceKey') + '=u6RcVsFR208vg2Vldw7UE%2BYn7T0GztD1MT%2FuY%2FMwo1Ya5uYcWCqFBUcoRkVykof%2FN%2BBymKAWQ2P2%2FPNTahz4%2Fg%3D%3D' + '&' + encodeURIComponent('food_Code') + '=' + food_code; 
+        var queryParams = '?' + encodeURIComponent('serviceKey') + process.env.EXPORT_API_SECRETKEY + '&' + encodeURIComponent('food_Code') + '=' + food_code; 
 
         request({
             url: url + queryParams,
