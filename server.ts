@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Express, Request, Response } from "express";
 // import path from "path";
 // import cors from "cors";
 
@@ -7,15 +7,14 @@ import express from "express";
 
 // import {getFoodInfoFromCode, getHumanFlag} from './src/getApi.js';
 
-// import { authService } from './src/fbInstance.js';
-// import {signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider} from'firebase/auth';
+import authRouter from "./src/routers/authRouter";
 
 // import FoodList from "./src/modules/FoodList.js";
 // import FoodInfo from './src/modules/FoodInfo.js';
 // import HumanFlag from "./src/modules/HumanFlag.js";
 
 // const __dirname = path.resolve();
-const app = express();
+const app:Express = express();
 const PORT = process.env.PORT || 8080;
 
 app.use(express.json());
@@ -29,33 +28,11 @@ app.use(express.json());
 // }));
 // app.use(express.static(path.join(__dirname, 'client/build')));
 
-// app.get("/", (req,res) => {
-//     res.send("rusNaBi's Web Server");
-//     // res.sendFile(path.join(__dirname, "client/build/index.html"));
-//     // console.log("/");
-// });
+app.use('/auth', authRouter);
 
-// app.post("/auth/login", async (req,res) => {
-//     const {body : {username, password}} = req;
-//     const data = await signInWithEmailAndPassword(authService, username, password);
-//     res.json({data});
-// });
-
-// app.post("/auth/join", async (req, res) => {
-//     const {body: {username, password}} = req;
-//     const data = await createUserWithEmailAndPassword(authService, username, password);
-//     res.json({data});
-// })
-
-// app.post("/auth/oauth/google", async (req, res) => {
-//     const provider = new GoogleAuthProvider();
-//     const data = await signInWithPopup(authService, provider);
-//     res.json({data});
-// })
-
-// app.post("/auth/logout", (req, res) => {
-//     authService.signOut();
-// })
+app.get("/", ( req:Request, res:Response ) => {
+    res.send("Footritions BackEnd Server");
+});
 
 // app.get("/api/getFoodList", async (req, res) => {
 //     const foodDatas = await FoodList.find();
