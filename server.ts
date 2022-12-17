@@ -34,6 +34,11 @@ app.get("/", ( req:Request, res:Response ) => {
     res.send("Footritions BackEnd Server");
 });
 
+app.get("/test", ( req:Request, res:Response ) => {
+    res.send("Test Success");
+    res.json({test: "test"});
+});
+
 // app.get("/api/getFoodList", async (req, res) => {
 //     const foodDatas = await FoodList.find();
 //     var foods = {};
@@ -65,5 +70,5 @@ app.get("/", ( req:Request, res:Response ) => {
 
 
 app.listen(PORT, function() {
-    console.log("Server is Now Running : http://localhost:8080");
+    console.log(`Server is Now Running : http://localhost:${PORT}`);
 });
