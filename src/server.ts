@@ -7,7 +7,7 @@ import express, { Express, Request, Response } from "express";
 
 // import {getFoodInfoFromCode, getHumanFlag} from './src/getApi.js';
 
-import authRouter from "./src/routers/authRouter";
+import authRouter from "./routers/authRouter";
 
 // import FoodList from "./src/modules/FoodList.js";
 // import FoodInfo from './src/modules/FoodInfo.js';
