@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.ts",
-  "type": "module",
   "start": "dist/server.ts",
   "scripts": {
     "start": "node dist/server.js", 
